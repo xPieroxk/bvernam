@@ -1,26 +1,34 @@
 # bvernam
 
 ## Overview
-bvernam is a simple command-line application for encrypting and decrypting files using a variant of the Vernam cipher. This project was developed as a submission for an Operating Systems exam. The cipher leverages the basic property of the XOR operator:
+bvernam is a simple command-line application for encrypting and decrypting files using a variant of the Vernam cipher. This project was developed as a submission for an Operating Systems exam. The cipher utilizes the basic property of the XOR operator:
 
 ```
 (A XOR B) XOR B = A
 ```
 
 ## Algorithm Description
+
+This application utilizes a variant of the Vernam Cipher, referred to as `bvernam`, to encrypt and decrypt files. The core of the algorithm utilizes a fundamental property of the binary XOR operator: `(A XOR B) XOR B = A`. This property ensures that the same process can be used for both encryption and decryption, making the operation reversible.
+
 Given:
-- A key file containing k bytes: b0, b1, …, bk-1
-- An input file (to be encrypted or decrypted) containing a sequence of bytes: d0, d1, …, dN
+* A key file (`keyfile`) containing `k` bytes: $b_0, b_1, \dots, b_{k-1}$.
+* An input file (`inputfile`) to be processed (encrypted or decrypted) containing a sequence of `N` bytes: $d_0, d_1, \dots, d_N$.
 
-The algorithm works as follows:
-1. The input file is divided into blocks of k bytes (except possibly the last block).
-2. For each block j and for each byte i in that block, compute:
+The `bvernam` algorithm processes the input file as follows:
 
-   ```
-   d'_j,i = d_j,i XOR b_{(j+i) mod k}
-   ```
+1.  **Block Division**: The input byte sequence (`d0, ..., dN`) is first divided into blocks, `D0, ..., D((N/k)-1)`. Each block consists of exactly `k` bytes, except possibly the last block, which may contain fewer bytes. The number of blocks is the integer division of N by k (`N / k`).
+2.  **Byte-level Transformation**: For each block `Dj = dj,0, ..., dj,k-1` (where `j` is the block index), each byte `dj,i` (at index `i` within the block) is transformed into a new byte `d'j,i` using the following operation:
+    ```
+    d'j,i = dj,i XOR b((j+i) mod k)
+    ```
+    This means the byte at position `i` of the block is XORed with the `(j+i) mod k`-th byte of the key.
+3.  **Output Generation**: The final output byte sequence will be obtained by concatenating all the transformed blocks:
+   <br>`D'0, ..., D'((N/k)-1)`.
 
-3. The output is the concatenation of all modified blocks.
+
+<br>Full description of the algorithm can be found at [link](https://drive.google.com/file/d/1vD2h-qkl6G8jpxXXRx9MWQRU_MrpsrC0/view)
+
 
 ## Usage
 The application is invoked from the command line with the following parameters:
@@ -59,7 +67,6 @@ Follow these steps to build the project with CMake:
 
    ```
    make
-
    ```
 
 The binary file `bvernam` will be created inside the `build/` directory.
