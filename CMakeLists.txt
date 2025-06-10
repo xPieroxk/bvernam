@@ -3,4 +3,4 @@ project(PieroHierro110944 C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_executable(bvernan main.c bvernan.c bvernan.h)
+add_executable(bvernam main.c bvernam.c bvernam.h)

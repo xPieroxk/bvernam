@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "bvernan.h"
+#include "bvernam.h"
 
 int main(int argc, char **argv) {
     if (argc != 4) {
@@ -14,11 +14,11 @@ int main(int argc, char **argv) {
         return 0;
     do {
         if (encode(data, source_b) == NULL || upload_encrypted_byte(data, source_b) == -1) {
-            free_bvernan(data, source_b);
+            free_bvernam(data, source_b);
             fprintf(stderr, "Error: Something went wrong during the encryption...\n");
             exit(EXIT_FAILURE);
         }
     } while (update_source_byte(data, source_b) != NULL);
-    free_bvernan(data, source_b);
+    free_bvernam(data, source_b);
     return 0;
 }
